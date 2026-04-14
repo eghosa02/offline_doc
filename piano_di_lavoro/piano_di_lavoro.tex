@@ -1,0 +1,29 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{setspace}
+\usepackage{titlesec}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\title{Piano di lavoro}
+\author{Mirofish Trading Offline}
+\date{\today}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries}{Capitolo \thechapter}{1em}{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\input{capitolo_1/capitolo_1}
+\input{capitolo_2/capitolo_2}
+
+\end{document}
