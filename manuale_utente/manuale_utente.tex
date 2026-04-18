@@ -1,0 +1,101 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[italian]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Configurazione margini
+\geometry{top=2cm, bottom=2cm, left=2cm, right=2cm}
+
+% Configurazione header e footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{MiroFish-Offline}
+\lhead{Manuale Utente}
+\cfoot{\thepage}
+
+% Configurazione colori
+\definecolor{darkblue}{rgb}{0.0, 0.2, 0.4}
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\definecolor{codegray}{rgb}{0.9, 0.9, 0.9}
+
+% Configurazione listings per codice
+\lstset{
+    language=bash,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codegray},
+    breaklines=true,
+    frame=single,
+    framerule=0pt,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    morekeywords={docker, docker-compose},
+}
+
+% Configurazione titoli
+\titleformat{\section}
+{\Large\bfseries\color{darkblue}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\large\bfseries\color{darkblue}}
+{\thesubsection}{1em}{}
+
+\title{\textbf{\color{darkblue}MiroFish-Offline}\\
+       \Large Manuale di Avvio con Docker}
+\author{MiroFish Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+% ===== SEZIONE 1: INTRODUZIONE =====
+\input{sezioni/introduzione}
+
+\newpage
+
+% ===== SEZIONE 2: PREREQUISITI =====
+\input{sezioni/prerequisiti}
+
+\newpage
+
+% ===== SEZIONE 3: CONFIGURAZIONE INIZIALE =====
+\input{sezioni/configurazione}
+
+\newpage
+
+% ===== SEZIONE 4: AVVIO DELL'APPLICAZIONE =====
+\input{sezioni/avvio}
+
+\newpage
+
+% ===== SEZIONE 5: COMANDI UTILI =====
+\input{sezioni/comandi_utili}
+
+\newpage
+
+% ===== SEZIONE 6: TROUBLESHOOTING =====
+\input{sezioni/troubleshooting}
+
+\newpage
+
+% ===== SEZIONE 7: PULIZIA E RESET =====
+\input{sezioni/pulizia}
+
+\newpage
+
+% ===== SEZIONE 8: PROSSIMI PASSI E RISORSE =====
+\input{sezioni/prossimi_passi}
+
+\end{document}
