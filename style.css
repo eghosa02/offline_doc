@@ -141,3 +141,14 @@ h1 {
   color: #2a2a2a;
   letter-spacing: 0.05em;
 }
+
+.baseline-header {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4ade80;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #1a1a1a;
+}

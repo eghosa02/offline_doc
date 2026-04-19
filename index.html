@@ -23,53 +23,59 @@
     const container = document.querySelector('.container');
     const footer = document.querySelector('.footer');
 
-    // Carica documenti generici
-    fetch('documenti.json')
-      .then(r => r.json())
-      .then(docs => {
-        docs.forEach(doc => {
-          const section = document.createElement('div');
-          section.className = 'section';
-          section.innerHTML = `
-            <div class="section-title">${doc.nome}</div>
-            <div class="pdf-list">
-              <a class="pdf-item" href="view.html?doc=${doc.file}">
-                <div class="pdf-icon-box"><span>PDF</span></div>
-                <div class="pdf-info">
-                  <div class="pdf-name">${doc.nome}</div>
-                  <div class="pdf-path">${doc.file}</div>
-                </div>
-                <span class="arrow">↗</span>
-              </a>
-            </div>`;
-          container.insertBefore(section, footer);
-        });
+    function creaSezione(titolo) {
+      const div = document.createElement('div');
+      div.className = 'section';
+      div.innerHTML = `<div class="section-title">${titolo}</div><div class="pdf-list" id="list-${titolo}"></div>`;
+      container.insertBefore(div, footer);
+      return document.getElementById(`list-${titolo}`);
+    }
+
+    function creaItem(href, nome, path) {
+      return `
+        <a class="pdf-item" href="${href}">
+          <div class="pdf-icon-box"><span>PDF</span></div>
+          <div class="pdf-info">
+            <div class="pdf-name">${nome}</div>
+            <div class="pdf-path">${path}</div>
+          </div>
+          <span class="arrow">↗</span>
+        </a>`;
+    }
+
+    async function caricaBaseline(baseline) {
+      // Header baseline
+      const header = document.createElement('div');
+      header.className = 'baseline-header';
+      header.textContent = baseline;
+      container.insertBefore(header, footer);
+
+      // Documenti principali
+      const res = await fetch(`${baseline}/documenti.json`);
+      const docs = await res.json();
+      docs.forEach(doc => {
+        const list = creaSezione(doc.nome);
+        list.innerHTML = creaItem(
+          `view.html?doc=${doc.file}`,
+          doc.nome,
+          doc.file
+        );
       });
 
-    // Carica verbali
-    fetch('verbali/verbali.json')
-      .then(r => r.json())
-      .then(verbali => {
-        const section = document.createElement('div');
-        section.className = 'section';
-        section.innerHTML = `
-          <div class="section-title">Verbali</div>
-          <div class="pdf-list" id="verbali-list"></div>`;
-        container.insertBefore(section, footer);
-
-        const list = document.getElementById('verbali-list');
-        verbali.forEach(v => {
-          list.innerHTML += `
-            <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
-              <div class="pdf-icon-box"><span>PDF</span></div>
-              <div class="pdf-info">
-                <div class="pdf-name">${v.nome}</div>
-                <div class="pdf-path">verbali/${v.file}</div>
-              </div>
-              <span class="arrow">↗</span>
-            </a>`;
-        });
+      // Verbali
+      const resV = await fetch(`${baseline}/verbali/verbali.json`);
+      const verbali = await resV.json();
+      const listV = creaSezione('Verbali ' + baseline);
+      verbali.forEach(v => {
+        listV.innerHTML += creaItem(
+          `view.html?doc=${baseline}/verbali/${v.file}`,
+          v.nome,
+          `${baseline}/verbali/${v.file}`
+        );
       });
+    }
+
+    caricaBaseline('RTB').then(() => caricaBaseline('PB'));
   </script>
 </body>
 </html>
