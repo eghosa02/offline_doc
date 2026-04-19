@@ -9,7 +9,7 @@
 
     body {
       font-family: system-ui, sans-serif;
-      background: #f9f9f7;
+      background: #0a0a0a;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -19,27 +19,29 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding: 0.75rem 2rem;
-      background: #fff;
-      border-bottom: 1px solid #e8e8e8;
+      padding: 0.85rem 2rem;
+      background: #0f0f0f;
+      border-bottom: 1px solid #1a1a1a;
       flex-shrink: 0;
     }
 
     .topbar a {
-      font-size: 0.85rem;
-      color: #555;
+      font-size: 0.8rem;
+      color: #444;
       text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
     }
 
-    .topbar a:hover { color: #111; }
+    .topbar a:hover { color: #4ade80; }
 
-    .topbar .doc-title {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #1a1a1a;
+    .separator { color: #1e1e1e; font-size: 0.8rem; }
+
+    .doc-title {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #555;
+      letter-spacing: 0.03em;
     }
 
     .viewer-wrapper {
@@ -54,8 +56,8 @@
       width: 100%;
       max-width: 960px;
       height: 100%;
-      border: 1px solid #e8e8e8;
-      border-radius: 8px;
+      border: 1px solid #1a1a1a;
+      border-radius: 6px;
       background: #fff;
     }
   </style>
@@ -64,7 +66,7 @@
 
   <div class="topbar">
     <a href="index.html">← indice</a>
-    <span style="color:#ddd;">|</span>
+    <span class="separator">|</span>
     <span class="doc-title" id="doc-title"></span>
   </div>
 
