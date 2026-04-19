@@ -2,22 +2,84 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Visualizzatore</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizzatore documenti</title>
   <style>
-    body { margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
-    .topbar { padding: 0.75rem 1.5rem; border-bottom: 1px solid #e8e8e8; }
-    iframe { flex: 1; width: 100%; border: none; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f9f9f7;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 2rem;
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      flex-shrink: 0;
+    }
+
+    .topbar a {
+      font-size: 0.85rem;
+      color: #555;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .topbar a:hover { color: #111; }
+
+    .topbar .doc-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .viewer-wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      max-width: 960px;
+      height: 100%;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      background: #fff;
+    }
   </style>
 </head>
 <body>
+
   <div class="topbar">
-    <a href="index.html">← Torna all'indice</a>
+    <a href="index.html">← indice</a>
+    <span style="color:#ddd;">|</span>
+    <span class="doc-title" id="doc-title"></span>
   </div>
-  <iframe id="viewer"></iframe>
+
+  <div class="viewer-wrapper">
+    <iframe id="viewer"></iframe>
+  </div>
+
   <script>
     const params = new URLSearchParams(window.location.search);
-    document.getElementById('viewer').src = params.get('doc');
+    const doc = params.get('doc');
+    document.getElementById('viewer').src = doc;
+    document.getElementById('doc-title').textContent = doc
+      ? doc.split('/').pop().replace('.pdf','').replace(/_/g,' ')
+      : '';
   </script>
+
 </body>
 </html>
