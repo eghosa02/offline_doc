@@ -66,23 +66,58 @@
     <div class="footer">mirofish trading · documentazione interna</div>
   </div>
 
-  <script>
-    fetch('verbali/verbali.json')
-      .then(r => r.json())
-      .then(verbali => {
-        const list = document.getElementById('verbali-list');
-        verbali.forEach(v => {
-          list.innerHTML += `
-            <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
+<script>
+  // Carica documenti generici
+  fetch('documenti.json')
+    .then(r => r.json())
+    .then(docs => {
+      const container = document.querySelector('.container');
+      const footer = document.querySelector('.footer');
+
+      docs.forEach(doc => {
+        const section = document.createElement('div');
+        section.className = 'section';
+        section.innerHTML = `
+          <div class="section-title">${doc.nome}</div>
+          <div class="pdf-list">
+            <a class="pdf-item" href="view.html?doc=${doc.file}">
               <div class="pdf-icon-box"><span>PDF</span></div>
               <div class="pdf-info">
-                <div class="pdf-name">${v.nome}</div>
-                <div class="pdf-path">verbali/${v.file}</div>
+                <div class="pdf-name">${doc.nome}</div>
+                <div class="pdf-path">${doc.file}</div>
               </div>
               <span class="arrow">↗</span>
-            </a>`;
-        });
+            </a>
+          </div>`;
+        container.insertBefore(section, footer);
       });
-  </script>
+    });
+
+  // Carica verbali
+  fetch('verbali/verbali.json')
+    .then(r => r.json())
+    .then(verbali => {
+      const footer = document.querySelector('.footer');
+      const section = document.createElement('div');
+      section.className = 'section';
+      section.innerHTML = `
+        <div class="section-title">Verbali</div>
+        <div class="pdf-list" id="verbali-list"></div>`;
+      container.insertBefore(section, footer);
+
+      const list = document.getElementById('verbali-list');
+      verbali.forEach(v => {
+        list.innerHTML += `
+          <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
+            <div class="pdf-icon-box"><span>PDF</span></div>
+            <div class="pdf-info">
+              <div class="pdf-name">${v.nome}</div>
+              <div class="pdf-path">verbali/${v.file}</div>
+            </div>
+            <span class="arrow">↗</span>
+          </a>`;
+      });
+    });
+</script>
 </body>
 </html>
