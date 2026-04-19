@@ -16,108 +16,60 @@
       <p class="subtitle">Documenti tecnici del progetto</p>
     </div>
 
-    <div class="section">
-      <div class="section-title">Analisi dei requisiti</div>
-      <div class="pdf-list">
-        <a class="pdf-item" href="view.html?doc=analisi_dei_requisiti/analisi_dei_requisiti.pdf">
-          <div class="pdf-icon-box"><span>PDF</span></div>
-          <div class="pdf-info">
-            <div class="pdf-name">Analisi dei requisiti</div>
-            <div class="pdf-path">analisi_dei_requisiti/analisi_dei_requisiti.pdf</div>
-          </div>
-          <span class="arrow">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Manuale utente</div>
-      <div class="pdf-list">
-        <a class="pdf-item" href="view.html?doc=manuale_utente/manuale_utente.pdf">
-          <div class="pdf-icon-box"><span>PDF</span></div>
-          <div class="pdf-info">
-            <div class="pdf-name">Manuale utente</div>
-            <div class="pdf-path">manuale_utente/manuale_utente.pdf</div>
-          </div>
-          <span class="arrow">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Norme di progetto</div>
-      <div class="pdf-list">
-        <a class="pdf-item" href="view.html?doc=norme_di_progetto/norme_di_progetto.pdf">
-          <div class="pdf-icon-box"><span>PDF</span></div>
-          <div class="pdf-info">
-            <div class="pdf-name">Norme di progetto</div>
-            <div class="pdf-path">norme_di_progetto/norme_di_progetto.pdf</div>
-          </div>
-          <span class="arrow">↗</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Verbali</div>
-      <div class="pdf-list" id="verbali-list"></div>
-    </div>
-
     <div class="footer">mirofish trading · documentazione interna</div>
   </div>
 
-<script>
-  // Carica documenti generici
-  fetch('documenti.json')
-    .then(r => r.json())
-    .then(docs => {
-      const container = document.querySelector('.container');
-      const footer = document.querySelector('.footer');
+  <script>
+    const container = document.querySelector('.container');
+    const footer = document.querySelector('.footer');
 
-      docs.forEach(doc => {
+    // Carica documenti generici
+    fetch('documenti.json')
+      .then(r => r.json())
+      .then(docs => {
+        docs.forEach(doc => {
+          const section = document.createElement('div');
+          section.className = 'section';
+          section.innerHTML = `
+            <div class="section-title">${doc.nome}</div>
+            <div class="pdf-list">
+              <a class="pdf-item" href="view.html?doc=${doc.file}">
+                <div class="pdf-icon-box"><span>PDF</span></div>
+                <div class="pdf-info">
+                  <div class="pdf-name">${doc.nome}</div>
+                  <div class="pdf-path">${doc.file}</div>
+                </div>
+                <span class="arrow">↗</span>
+              </a>
+            </div>`;
+          container.insertBefore(section, footer);
+        });
+      });
+
+    // Carica verbali
+    fetch('verbali/verbali.json')
+      .then(r => r.json())
+      .then(verbali => {
         const section = document.createElement('div');
         section.className = 'section';
         section.innerHTML = `
-          <div class="section-title">${doc.nome}</div>
-          <div class="pdf-list">
-            <a class="pdf-item" href="view.html?doc=${doc.file}">
+          <div class="section-title">Verbali</div>
+          <div class="pdf-list" id="verbali-list"></div>`;
+        container.insertBefore(section, footer);
+
+        const list = document.getElementById('verbali-list');
+        verbali.forEach(v => {
+          list.innerHTML += `
+            <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
               <div class="pdf-icon-box"><span>PDF</span></div>
               <div class="pdf-info">
-                <div class="pdf-name">${doc.nome}</div>
-                <div class="pdf-path">${doc.file}</div>
+                <div class="pdf-name">${v.nome}</div>
+                <div class="pdf-path">verbali/${v.file}</div>
               </div>
               <span class="arrow">↗</span>
-            </a>
-          </div>`;
-        container.insertBefore(section, footer);
+            </a>`;
+        });
       });
-    });
-
-  // Carica verbali
-  fetch('verbali/verbali.json')
-    .then(r => r.json())
-    .then(verbali => {
-      const footer = document.querySelector('.footer');
-      const section = document.createElement('div');
-      section.className = 'section';
-      section.innerHTML = `
-        <div class="section-title">Verbali</div>
-        <div class="pdf-list" id="verbali-list"></div>`;
-      container.insertBefore(section, footer);
-
-      const list = document.getElementById('verbali-list');
-      verbali.forEach(v => {
-        list.innerHTML += `
-          <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
-            <div class="pdf-icon-box"><span>PDF</span></div>
-            <div class="pdf-info">
-              <div class="pdf-name">${v.nome}</div>
-              <div class="pdf-path">verbali/${v.file}</div>
-            </div>
-            <span class="arrow">↗</span>
-          </a>`;
-      });
-    });
-</script>
+  </script>
 </body>
 </html>
