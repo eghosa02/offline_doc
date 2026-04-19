@@ -67,7 +67,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add RTB/documenti.json RTB/verbali/verbali.json PB/documenti.json PB/verbali/verbali.json
+          find . -name "documenti.json" -o -name "verbali.json" | xargs git add
           git diff --staged --quiet || git commit -m "chore: aggiorna JSON documenti"
           git pull --rebase origin main
           git push origin main
