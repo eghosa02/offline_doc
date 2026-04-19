@@ -2,8 +2,11 @@ name: Genera verbali.json
 
 on:
   push:
-    paths:
-      - 'verbali/**.pdf'  # si attiva solo quando cambia qualcosa in verbali/
+    branches:
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   genera:
