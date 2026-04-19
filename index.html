@@ -44,6 +44,15 @@
     }
 
     async function caricaBaseline(baseline) {
+      let docs = [];
+      let verbali = [];
+
+      try {
+        const res = await fetch(`${baseline}/documenti.json`);
+        if (!res.ok) throw new Error('not found');
+        docs = await res.json();
+      } catch { return; } // se non esiste la baseline, salta tutto
+
       // Header baseline
       const header = document.createElement('div');
       header.className = 'baseline-header';
@@ -51,8 +60,6 @@
       container.insertBefore(header, footer);
 
       // Documenti principali
-      const res = await fetch(`${baseline}/documenti.json`);
-      const docs = await res.json();
       docs.forEach(doc => {
         const list = creaSezione(doc.nome);
         list.innerHTML = creaItem(
@@ -62,17 +69,20 @@
         );
       });
 
-      // Verbali
-      const resV = await fetch(`${baseline}/verbali/verbali.json`);
-      const verbali = await resV.json();
-      const listV = creaSezione('Verbali ' + baseline);
-      verbali.forEach(v => {
-        listV.innerHTML += creaItem(
-          `view.html?doc=${baseline}/verbali/${v.file}`,
-          v.nome,
-          `${baseline}/verbali/${v.file}`
-        );
-      });
+      // Verbali (opzionali)
+      try {
+        const resV = await fetch(`${baseline}/verbali/verbali.json`);
+        if (!resV.ok) throw new Error('not found');
+        verbali = await resV.json();
+        const listV = creaSezione('Verbali ' + baseline);
+        verbali.forEach(v => {
+          listV.innerHTML += creaItem(
+            `view.html?doc=${baseline}/verbali/${v.file}`,
+            v.nome,
+            `${baseline}/verbali/${v.file}`
+          );
+        });
+      } catch {} // verbali opzionali, si ignora se non esistono
     }
 
     caricaBaseline('RTB').then(() => caricaBaseline('PB'));
