@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualizzatore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <p><a href="index.html">← Torna all'indice</a></p>
+  <iframe id="viewer" src="" width="100%" height="90vh" style="border: 1px solid #e8e8e8; border-radius: 8px; margin-top: 1rem;"></iframe>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('viewer').src = params.get('doc');
+  </script>
+</body>
+</html>

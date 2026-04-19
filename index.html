@@ -13,7 +13,7 @@
 
   <div class="section-title">Analisi dei requisiti</div>
   <div class="pdf-list">
-    <a class="pdf-item" href="analisi_dei_requisiti/analisi_dei_requisiti.pdf" target="_blank">
+    <a class="pdf-item" href="view.html?doc=analisi_dei_requisiti/analisi_dei_requisiti.pdf" target="_blank">
       <span class="pdf-icon">📄</span>
       <div class="pdf-info">
         <div class="pdf-name">Analisi dei requisiti</div>
@@ -25,7 +25,7 @@
 
   <div class="section-title">Manuale utente</div>
   <div class="pdf-list">
-    <a class="pdf-item" href="manuale_utente/manuale_utente.pdf" target="_blank">
+    <a class="pdf-item" href="view.html?doc=manuale_utente/manuale_utente.pdf" target="_blank">
       <span class="pdf-icon">📄</span>
       <div class="pdf-info">
         <div class="pdf-name">Manuale utente</div>
@@ -35,29 +35,39 @@
     </a>
   </div>
 
-  <div class="section-title">Piano di lavoro</div>
+  <div class="section-title">Norme di progetto</div>
   <div class="pdf-list">
-    <a class="pdf-item" href="piano_di_lavoro/piano_di_lavoro.pdf" target="_blank">
+    <a class="pdf-item" href="view.html?doc=norme_di_progetto/norme_di_progetto.pdf" target="_blank">
       <span class="pdf-icon">📄</span>
       <div class="pdf-info">
-        <div class="pdf-name">Piano di lavoro</div>
-        <div class="pdf-path">piano_di_lavoro/piano_di_lavoro.pdf</div>
+        <div class="pdf-name">Norme di progetto</div>
+        <div class="pdf-path">norme_di_progetto/norme_di_progetto.pdf</div>
       </div>
       <span class="arrow">↗</span>
     </a>
   </div>
 
   <div class="section-title">Verbali</div>
-  <div class="pdf-list">
-    <a class="pdf-item" href="verbali/NomeVerbale.pdf" target="_blank">
-      <span class="pdf-icon">📄</span>
-      <div class="pdf-info">
-        <div class="pdf-name">NomeVerbale</div>
-        <div class="pdf-path">verbali/NomeVerbale.pdf</div>
-      </div>
-      <span class="arrow">↗</span>
-    </a>
-  </div>
+  <div class="pdf-list" id="verbali-list"></div>
+
+  <script>
+    fetch('verbali/verbali.json')
+      .then(r => r.json())
+      .then(verbali => {
+        const list = document.getElementById('verbali-list');
+        verbali.forEach(v => {
+          list.innerHTML += `
+            <a class="pdf-item" href="view.html?doc=verbali/${v.file}">
+              <span class="pdf-icon">📄</span>
+              <div class="pdf-info">
+                <div class="pdf-name">${v.nome}</div>
+                <div class="pdf-path">verbali/${v.file}</div>
+              </div>
+              <span class="arrow">↗</span>
+            </a>`;
+        });
+      });
+  </script>
 
 </body>
 </html>
